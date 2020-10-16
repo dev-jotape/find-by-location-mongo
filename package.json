@@ -1,0 +1,53 @@
+{
+  "name": "ze-code-challenges",
+  "version": "0.0.1",
+  "description": "Zé Delivery Code Challenges",
+  "main": "src/main.ts",
+  "scripts": {
+    "docs": "typedoc src/",
+    "start": "node --inspect=5858 -r ts-node/register ./src/main.ts",
+    "start:watch": "nodemon",
+    "serve": "node dist/server.js",
+    "prettify": "prettier --write src/**/*.ts src/*.ts",
+    "test": "jest --no-cache"
+  },
+  "license": "MIT",
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "mongoose",
+    "mongodb",
+    "graphql",
+    "apollo-server",
+    "nodemon"
+  ],
+  "dependencies": {
+    "@types/graphql": "^14.2.3",
+    "@types/jest": "^26.0.14",
+    "@types/mongoose": "^5.5.9",
+    "apollo-server": "^2.7.0",
+    "graphql": "^14.4.2",
+    "graphql-geojson-scalar-types": "^0.0.5",
+    "graphql-tag": "^2.11.0",
+    "jest": "^26.5.3",
+    "mongoose": "^5.6.6",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^26.4.1",
+    "type-graphql": "^0.17.4",
+    "typedi": "^0.8.0",
+    "typegoose": "^5.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.12",
+    "apollo-boost": "^0.4.9",
+    "cross-fetch": "^3.0.6",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typedoc": "^0.15.0",
+    "typescript": "^3.5.2"
+  }
+}
