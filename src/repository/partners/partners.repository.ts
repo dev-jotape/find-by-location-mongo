@@ -47,9 +47,9 @@ export class PartnersRepository {
     return !!partner.ok
   }
 
-  async searchPartner(lat: Number, long: Number): Promise<PartnersResponse> {
-    const partnersByLocation = await this.findByLocation(lat, long);
-    const partnersCoverageArea = await this.findByCoverageArea(lat, long);
+  async searchPartner(long: Number, lat: Number): Promise<PartnersResponse> {
+    const partnersByLocation = await this.findByLocation(long, lat);
+    const partnersCoverageArea = await this.findByCoverageArea(long, lat);
 
     console.log(JSON.stringify(partnersByLocation))
 
@@ -67,11 +67,11 @@ export class PartnersRepository {
     throw new Error("No Partner found");
   }
 
-  async findByCoverageArea(lat, long) {
-    return this.partnersDatasource.findByCoverageArea(lat, long);
+  async findByCoverageArea(long, lat) {
+    return this.partnersDatasource.findByCoverageArea(long, lat);
   }
 
-  async findByLocation(lat, long) {
-    return this.partnersDatasource.findByLocation(lat, long);
+  async findByLocation(long, lat) {
+    return this.partnersDatasource.findByLocation(long, lat);
   }
 }

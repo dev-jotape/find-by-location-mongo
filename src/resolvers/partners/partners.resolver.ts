@@ -34,6 +34,6 @@ export class PartnersResolver {
     @Arg('lat') lat: Number,
     @Arg('long') long: Number,
   ) {
-    return this.partnersRepository.searchPartner(lat, long)
+    return this.partnersRepository.searchPartner(long, lat)
   }
 }

@@ -25,26 +25,26 @@ export class PartnersDatasource {
         return PartnersModel.deleteOne({ id }).exec()
     }
 
-    findByCoverageArea(lat, long) {
+    findByCoverageArea(long, lat) {
         return PartnersModel.find({
             coverageArea: {
                 $geoIntersects: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [lat, long]
+                        coordinates: [long, lat]
                     }
                 }
             }
         })
     }
 
-    findByLocation(lat, long) {
+    findByLocation(long, lat) {
         return PartnersModel.find({
             address: {
                 $near: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [lat, long]
+                        coordinates: [long, lat]
                     }
                 }
             }
