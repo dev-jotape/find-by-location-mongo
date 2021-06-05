@@ -15,7 +15,7 @@ export class PartnersResolver {
   }
 
   @Query(returns => PartnersResponse)
-  getPartnerById(@Arg('id') id: string) {
+  getPartnerById(@Arg('_id') id: string) {
     return this.partnersRepository.getById(id)
   }
 
@@ -29,7 +29,7 @@ export class PartnersResolver {
     return this.partnersRepository.deletePartner(id);
   }
 
-  @Query(returns => PartnersResponse)
+  @Query(returns => [PartnersResponse])
   searchPartner(
     @Arg('lat') lat: Number,
     @Arg('long') long: Number,

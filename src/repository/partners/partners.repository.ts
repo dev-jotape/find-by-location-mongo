@@ -3,14 +3,13 @@ import { PartnersInput } from '../../resolvers/partners/schema/partners.input'
 import { PartnersDatasource } from '../../datasource/partners/partners.datasource'
 import { PartnersEntity } from '../../datasource/partners/partners.entity';
 import { PartnersResponse } from '../../resolvers/partners/schema/partners.object-type';
-import { validaCpfCnpj } from '../../services/validateDocument'
 
 @Service()
 export class PartnersRepository {
   constructor(
     private partnersDatasource: PartnersDatasource,
   ) { }
-  async getById(id): Promise<PartnersInput> {
+  async getById(id: string): Promise<PartnersInput> {
     const partner = await this.partnersDatasource.getById(id);
     if(!partner) throw new Error("No Partner found");
     return partner as PartnersInput;
@@ -23,23 +22,8 @@ export class PartnersRepository {
 
   async createPartner(partnerInput: PartnersInput): Promise<PartnersInput> {
     partnerInput.document = partnerInput.document.replace(/\D/gim, '')
-
-    if (await this.partnerExist(partnerInput)) throw new Error("Partner already included");
-
     const partner = await this.partnersDatasource.createPartner(partnerInput)
     return partner as PartnersInput;
-  }
-
-  async partnerExist(partnerInput: PartnersInput): Promise<Boolean> {
-    const partnerById = await this.partnersDatasource.getById(partnerInput.id);
-    if (partnerById) return true;
-
-    console.log(partnerInput.document)
-
-    const partnerByDocument = await this.partnersDatasource.getByDocument(partnerInput.document);
-    if (partnerByDocument) return true;
-
-    return false;
   }
 
   async deletePartner(id: string): Promise<Boolean> {
@@ -47,15 +31,14 @@ export class PartnersRepository {
     return !!partner.ok
   }
 
-  async searchPartner(long: Number, lat: Number): Promise<PartnersResponse> {
-    const partnersByLocation = await this.findByLocation(long, lat);
+  async searchPartner(long: Number, lat: Number): Promise<PartnersResponse[]> {
     const partnersCoverageArea = await this.findByCoverageArea(long, lat);
+    if (
+      !partnersCoverageArea || 
+      !partnersCoverageArea.length
+      ) throw new Error("No Partner found");
 
-    console.log(JSON.stringify(partnersByLocation))
-
-    if (!partnersByLocation || !partnersByLocation.length || !partnersCoverageArea || !partnersCoverageArea.length) throw new Error("No Partner found");
-
-    return this.filterPartner(partnersByLocation, partnersCoverageArea);
+    return partnersCoverageArea;
   }
 
   async filterPartner(partnersByLocation: PartnersEntity[], partnersCoverageArea: PartnersEntity[]): Promise<PartnersEntity> {
@@ -69,9 +52,5 @@ export class PartnersRepository {
 
   async findByCoverageArea(long, lat) {
     return this.partnersDatasource.findByCoverageArea(long, lat);
-  }
-
-  async findByLocation(long, lat) {
-    return this.partnersDatasource.findByLocation(long, lat);
   }
 }

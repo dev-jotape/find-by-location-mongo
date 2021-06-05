@@ -1,8 +1,25 @@
-mongo:
-  image: mongo
-  environment:
-    MONGO_INITDB_ROOT_USERNAME: root
-    MONGO_INITDB_ROOT_PASSWORD: root
-  ports:
-    - "27017:27017"
+version: '3'
 
+services:
+  node:
+    build:
+      context: ./
+      target: dev
+    volumes:
+      - ./:/app
+    command: npm run start
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: development
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"

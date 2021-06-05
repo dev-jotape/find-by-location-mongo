@@ -7,15 +7,32 @@ import * as path from 'path';
 
 const MONGODB_URI = !!process.env.MONGODB_URI
   ? process.env.MONGODB_URI
-  : "mongodb://root:root@localhost:27017";
+  : "mongodb://root:root@mongo";
+
+
+const connectWithRetry = () => {
+  console.info('MongoDB connection with retry')
+  return mongoose.connect(MONGODB_URI, {
+    useCreateIndex: true,
+    useNewUrlParser: true
+  });
+}
 
 async function bootstrap() {
   if (mongoose.connection.readyState === 0) {
-    mongoose.connect(MONGODB_URI, {
-      useCreateIndex: true,
-      useNewUrlParser: true
-    })
+    connectWithRetry();
   }
+
+  mongoose.connection.on('error', err => {
+    console.error(`MongoDB connection error: ${err}`)
+    setTimeout(connectWithRetry, 5000)
+    // process.exit(-1)
+  });
+
+  mongoose.connection.on('connected', () => {
+    console.info('MongoDB is connected')
+  })
+
   try {
     const schema = await buildSchema({
       resolvers: [path.join(__dirname, '..') + '/**/*.resolver.{ts,js}'],
@@ -26,7 +43,7 @@ async function bootstrap() {
       playground: true
     })
     const { url } = await server.listen()
-    console.log(`Server is running, GraphQL Playground available at ${url}`)
+    console.info(`Server is running, GraphQL Playground available at ${url}`)
   } catch (ex) {
     console.error(ex)
   }

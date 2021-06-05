@@ -1,11 +1,8 @@
-import { InputType, Field, Float } from 'type-graphql'
-import { MultiPolygon, Point } from 'graphql-geojson-scalar-types'
+import { InputType, Field } from 'type-graphql'
+import { Point, Polygon } from 'graphql-geojson-scalar-types'
 
 @InputType()
 export class PartnersInput {
-    @Field()
-    id: string;
-
     @Field()
     tradingName: string;
 
@@ -15,8 +12,8 @@ export class PartnersInput {
     @Field()
     document: string;
 
-    @Field(type => MultiPolygon)
-    coverageArea: MultiPolygon;
+    @Field(type => Polygon)
+    coverageArea: Polygon;
 
     @Field(type => Point)
     address: Point;

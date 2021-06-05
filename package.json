@@ -1,12 +1,12 @@
 {
-  "name": "ze-code-challenges",
+  "name": "find-by-location-mongo",
   "version": "0.0.1",
-  "description": "Zé Delivery Code Challenges",
+  "description": "Find partners by location",
   "main": "src/main.ts",
   "scripts": {
     "docs": "typedoc src/",
-    "start": "node --inspect=5858 -r ts-node/register ./src/main.ts",
-    "start:watch": "nodemon",
+    "build": "node --inspect=5858 -r ts-node/register ./src/main.ts",
+    "start": "nodemon",
     "serve": "node dist/server.js",
     "prettify": "prettier --write src/**/*.ts src/*.ts",
     "test": "jest --no-cache"
@@ -30,6 +30,7 @@
     "graphql-geojson-scalar-types": "^0.0.5",
     "graphql-tag": "^2.11.0",
     "jest": "^26.5.3",
+    "mongodb-memory-server": "^6.9.6",
     "mongoose": "^5.6.6",
     "reflect-metadata": "^0.1.13",
     "ts-jest": "^26.4.1",

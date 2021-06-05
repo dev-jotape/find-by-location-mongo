@@ -5,8 +5,8 @@ import { PartnersInput } from '../../resolvers/partners/schema/partners.input'
 
 @Service()
 export class PartnersDatasource {
-    getById(id: string): Promise<PartnersEntity> {
-        return PartnersModel.findOne({ id }).exec()
+    getById(_id: string): Promise<PartnersEntity> {
+        return PartnersModel.findOne({ _id }).exec()
     }
 
     getByDocument(document: string): Promise<PartnersEntity> {
@@ -31,20 +31,15 @@ export class PartnersDatasource {
                 $geoIntersects: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [long, lat]
+                        coordinates: [lat, long]
                     }
                 }
-            }
-        })
-    }
-
-    findByLocation(long, lat) {
-        return PartnersModel.find({
+            },
             address: {
                 $near: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [long, lat]
+                        coordinates: [lat, long]
                     }
                 }
             }

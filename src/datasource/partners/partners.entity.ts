@@ -1,11 +1,10 @@
-import { Document, Schema } from "mongoose";
-import { MultiPolygon, Point } from 'graphql-geojson-scalar-types'
+import { Document } from "mongoose";
+import { Point, Polygon } from 'graphql-geojson-scalar-types'
 
 export interface PartnersEntity extends Document {
-  id: string;
   tradingName: string;
   ownerName: string;
   document: string;
-  coverageArea: MultiPolygon;
+  coverageArea: Polygon;
   address: Point;
 }

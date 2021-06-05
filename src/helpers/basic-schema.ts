@@ -12,14 +12,14 @@ export const OptionalDate = { type: Date, required: false };
 export const OptionalNumberArray = { type: [Number], required: false };
 export const RequiredAny = { type: {}, required: true };
 export const OptionalAny = { type: {}, required: false };
-export const RequiredMultiPolygon = {
+export const RequiredPolygon = {
     type: {
         type: String,
-        enum: ['MultiPolygon'],
+        enum: ['Polygon'],
         required: true
     },
     coordinates: {
-        type: [[[[Number]]]],
+        type: [[[Number]]],
         required: true
     }
 };
