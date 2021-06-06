@@ -6,11 +6,7 @@ import { PartnersInput } from '../../resolvers/partners/schema/partners.input'
 @Service()
 export class PartnersDatasource {
     getById(_id: string): Promise<PartnersEntity> {
-        return PartnersModel.findOne({ _id }).exec()
-    }
-
-    getByDocument(document: string): Promise<PartnersEntity> {
-        return PartnersModel.findOne({ document }).exec()
+        return PartnersModel.findById(_id).exec()
     }
 
     getAll() {
@@ -21,8 +17,8 @@ export class PartnersDatasource {
         return PartnersModel.create(partnerInput)
     }
 
-    deletePartner(id: string) {
-        return PartnersModel.deleteOne({ id }).exec()
+    deletePartner(_id: string) {
+        return PartnersModel.deleteOne({ _id }).exec()
     }
 
     findByCoverageArea(long, lat) {

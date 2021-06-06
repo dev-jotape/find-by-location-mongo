@@ -25,7 +25,7 @@ export class PartnersResolver {
   }
 
   @Mutation(returns => Boolean)
-  deletePartner(@Arg('id') id: string) {
+  deletePartner(@Arg('_id') id: string) {
     return this.partnersRepository.deletePartner(id);
   }
 

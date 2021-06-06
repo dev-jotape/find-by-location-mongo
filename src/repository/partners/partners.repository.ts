@@ -38,7 +38,7 @@ export class PartnersRepository {
       !partnersCoverageArea.length
       ) throw new Error("No Partner found");
 
-    return partnersCoverageArea;
+    return partnersCoverageArea as PartnersResponse[];
   }
 
   async filterPartner(partnersByLocation: PartnersEntity[], partnersCoverageArea: PartnersEntity[]): Promise<PartnersEntity> {
