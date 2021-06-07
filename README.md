@@ -1,12 +1,12 @@
 # Code
 
-Graphql API to work with [GIS](https://en.wikipedia.org/wiki/Geographic_information_system).
+Graphql API to deals with [GIS](https://en.wikipedia.org/wiki/Geographic_information_system) objects.
 Code functions:
 
  1. Create Partner
  2. List all partners
  3. Get partner by ID
- 4. Search partners by location (where location is included in the partner's coverage area)
+ 4. Search partners by location (which the coverage area includes the location)
  5. Delete partner
 
 ## Technologies
@@ -76,9 +76,9 @@ JSON example:
    
    
 
- 1. The field `coverageArea` uses the [GeoJSON Polygon](https://en.wikipedia.org/wiki/GeoJSON) format
- 2. The field `address` uses the [GeoJSON Point](https://en.wikipedia.org/wiki/GeoJSON) format
- 3. The field `document` should be unique
+ 1. The `coverageArea` field follows the [GeoJSON Polygon](https://en.wikipedia.org/wiki/GeoJSON) format
+ 2. The `address` field follows the [GeoJSON Point](https://en.wikipedia.org/wiki/GeoJSON) format
+ 3. The `document` must be a unique field
 
 ## Examples
 ### CreatePartner
