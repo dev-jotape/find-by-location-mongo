@@ -1,83 +1,108 @@
-# Code Challenge
+# Code
 
-API Graphql para trabalhar com objetos [GIS](https://en.wikipedia.org/wiki/Geographic_information_system).
-Possui 5 funções :
+Graphql API to work with [GIS](https://en.wikipedia.org/wiki/Geographic_information_system).
+Code functions:
 
- 1. Criar Parceiro
- 2. Listar todos os parceiros
- 3. Obter parceiro por ID
- 4. Obter parceiro por localização (o parceiro mais próximo e que cuja área de cobertura inclua a localização)
- 5. Excluir parceiro
+ 1. Create Partner
+ 2. List all partners
+ 3. Get partner by ID
+ 4. Search partners by location (where location is included in the partner's coverage area)
+ 5. Delete partner
 
-## Tecnologias utilizadas
+## Technologies
 
  1. Node
  2. Typescript
  3. Graphql
  4. MongoDB
  5. Jest
+ 6. Docker
 
 ## Get started
 ### Install
-`yarn` 
-`npm install`
+`yarn` OR `npm install`
 
 ### Run
 `docker-compose up`
 
 ### Test
-`yarn run test`
+`yarn test`
 
-## Parceiro
-Exemplo de parceiro: 
+## Partner
+JSON example: 
 
     {
-    	  "id": 1, 
-    	  "tradingName": "CD Pinheiros",
-    	  "ownerName": "Toninho da Silva",
-    	  "document": "1432132123891/0001",
-    	  "coverageArea": { 
-    	    "type": "MultiPolygon", 
-    	    "coordinates": [
-    	      [[[30, 20], [45, 40], [10, 40], [30, 20]]], 
-    	      [[[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]]
-    	    ]
-    	  },
-    	  "address": { 
-    	    "type": "Point",
-    	    "coordinates": [-46.57421, -21.785741]
-    	  }
+      "getPartnerById": {
+        "_id": "60bbbe68ff671a038d4ba20a",
+        "tradingName": "CD Marilia",
+        "ownerName": "Toninho da Silva",
+        "document": "83639240000168",
+        "coverageArea": {
+          "coordinates": [
+            [
+              [
+                -22.199537,
+                -49.976083
+              ],
+              [
+                -22.221122,
+                -49.972595
+              ],
+              [
+                -22.216581,
+                -49.93396
+              ],
+              [
+                -22.189877,
+                -49.945984
+              ],
+              [
+                -22.199537,
+                -49.976083
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "address": {
+          "type": "Point",
+          "coordinates": [
+            -22.199656,
+            -49.95326
+          ]
+        }
+      }
     }
    
    
 
- 1. O campo `coverageArea` segue o formato [GeoJSON MultiPolygon](https://en.wikipedia.org/wiki/GeoJSON)
- 2. O campo `address` segue o formato [GeoJSON Point](https://en.wikipedia.org/wiki/GeoJSON)
- 3. Os campos `id` e `document` devem ser únicos entre os parceiros
+ 1. The field `coverageArea` uses the [GeoJSON Polygon](https://en.wikipedia.org/wiki/GeoJSON) format
+ 2. The field `address` uses the [GeoJSON Point](https://en.wikipedia.org/wiki/GeoJSON) format
+ 3. The field `document` should be unique
 
-## Exemplos
+## Examples
 ### CreatePartner
 Mutation:  
 
-    mutation CreatePartner {
+    mutation {
       createPartner(partner: {
-        id: 1, 
-        tradingName: "CD Pinheiros",
+        tradingName: "CD Marilia 2",
         ownerName: "Toninho da Silva",
-        document: "1432132123891/0001",
+        document: "93639240000168",
         coverageArea: { 
           type: "Polygon", 
           coordinates: [
-            [[[30, 20], [45, 40], [10, 40], [30, 20]]], 
-            [[[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]]
+            [
+              [-22.199537, -49.976083],[-22.221122, -49.972595], [-22.216581, -49.933960], [-22.189877, -49.945984], [-22.199537, -49.976083]
+            ]
           ]
         },
         address: { 
           type: "Point",
-          coordinates: [-46.57421, -21.785741]
+          coordinates: [-22.207205, -49.958582]
         }
       }) {
-        id
+        _id
         tradingName
         document
         coverageArea
@@ -87,9 +112,9 @@ Mutation:
 
 ### GetPartnerById
 
-    query getPartnerById {
-      getPartnerById(id: 1) {
-        id
+    query getById {
+      getPartnerById(_id: "60bbbe68ff671a038d4ba20a") {
+        _id
         tradingName
         ownerName
         document
@@ -100,19 +125,16 @@ Mutation:
 
 ### SearchPartner (by location)
 
-    query searchPartner {
-      searchPartner(long: -43.30355, lat: -23.01327) {
-        id
+    query searchPartnerByLocation {
+      searchPartner(lat: -22.200738, long: -49.955690)  {
+        _id
         tradingName
-        ownerName
-        document
-        coverageArea
         address
       }
     }
  ### DeletePartner
  
 
-    mutation delete {
-      deletePartner(id: 1)
+    mutation deletePartner {
+      deletePartner(_id: "60bbe42526d984002d46396f") 
     }
